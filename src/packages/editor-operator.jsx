@@ -27,10 +27,10 @@ export default defineComponent({
     const reset = () => {
       if (!props.block) {
         state.editData = deepcopy(props.data.container);
-        console.log("状态", state.editData);
+        //  console.log("状态", state.editData);
       } else {
         state.editData = deepcopy(props.block);
-        console.log("状态", state.editData);
+        //console.log("状态", state.editData);
       }
     };
     const apply = () => {
@@ -61,7 +61,7 @@ export default defineComponent({
         let component = config.componentMap[props.block.key];
         //console.log("com", component);
         if (component && component.props) {
-         // console.log("局部11", component.props);
+          // console.log("局部11", component.props);
           content.push(
             Object.entries(component.props).map(([propName, propConfig]) => {
               //console.log("名字", propName, "config", propConfig);

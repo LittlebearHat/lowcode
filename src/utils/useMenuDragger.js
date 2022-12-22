@@ -21,7 +21,6 @@ export function useMenuDragger(containerRef, data) {
       blocks: [
         ...blocks,
         {
-          shabi: 1,
           top: e.offsetY,
           left: e.offsetX,
           zIndex: 1,
@@ -36,8 +35,8 @@ export function useMenuDragger(containerRef, data) {
     currentComponent = null;
   };
   const dragstart = (e, component) => {
-    console.log("start e", e, component);
-    console.log("组件", containerRef.value);
+    // console.log("start e", e, component);
+    //console.log("组件", containerRef.value);
     containerRef.value.addEventListener("dragenter", dragenter); //进入元素中
     containerRef.value.addEventListener("dragover", dragover); //目标元素经过
     containerRef.value.addEventListener("dragleave", dragleave); //离开

@@ -31,7 +31,7 @@ export default defineComponent({
       return (
         <div>
           {(!data.value || data.value.length == 0) && (
-            <ElButton onClick={add}>add</ElButton>
+            <ElButton onClick={add}>新增选项</ElButton>
           )}
           {(data.value || []).map((item) => (
             <ElTag onClick={add}>{item[props.propConfig.table.key]}</ElTag>

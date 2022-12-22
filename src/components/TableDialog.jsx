@@ -37,7 +37,7 @@ const TableComponent = defineComponent({
     };
     ctx.expose(methods);
     return () => {
-      console.log("数据", state.editData);
+      //  console.log("数据", state.editData);
       return (
         <ElDialog v-model={state.isShow} title={state.option.config.label}>
           {{

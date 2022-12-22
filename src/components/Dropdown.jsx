@@ -89,8 +89,8 @@ export function $dropdown(option) {
     vm = createVNode(DropdownComponent, { option });
     document.body.appendChild((render(vm, el), el));
   }
-  console.log("drop逗我呢");
+  //console.log("drop逗我呢");
   let { showDropdown } = vm.component.exposed;
   showDropdown(option);
-  console.log("drop逗11我呢");
+  //console.log("drop逗11我呢");
 }

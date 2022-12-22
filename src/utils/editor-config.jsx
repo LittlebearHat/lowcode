@@ -81,47 +81,53 @@ registerConfig.register({
     height: false,
   },
   preview: () => <ElInput placeholder="预览输入栏">预览文本</ElInput>,
-  render: ({ model, size }) => (
+  render: ({ props, size }) => (
     <ElInput
       placeholder="渲染输入栏"
-      {...model.default}
+      v-model={props.text}
       style={{ width: size.width + "px" }}
-    >
-      渲染文本
-    </ElInput>
+    ></ElInput>
   ),
   key: "input",
-  model: {
-    default: "绑定字段",
+  props: {
+    text: createInputProp("绑定字段"),
   },
+  // model: {
+  //   default: "绑定字段",
+  // },
 });
 registerConfig.register({
   label: "范围选择器",
   preview: () => <Range placeholder="预览输入框"></Range>,
-  render: ({ model }) => {
-    console.log(model);
+  render: ({ props }) => {
+    console.log("范围选择器", props);
+    // console.log(model, "范围选择器", props);
     return (
       <Range
         {...{
-          start: model.start.modelValue,
-          "onUpdate:start": model.start["onUpdate:modelValue"],
-          end: model.end.modelValue,
-          "onUpdate:end": model.end["onUpdate:modelValue"],
+          start: props.start,
+          // "onUpdate:start": props.start["onUpdate:modelValue"],
+          end: props.end,
+          //  "onUpdate:end": props.end["onUpdate:modelValue"],
         }}
       ></Range>
     );
   },
-  model: {
-    start: "开始范围",
-    end: "结束范围",
+  props: {
+    start: createInputProp("开始范围"),
+    end: createInputProp("结束范围"),
   },
+  // model: {
+  //   start: "开始范围",
+  //   end: "结束范围",
+  // },
   key: "range",
 });
 registerConfig.register({
   label: "下拉框",
   preview: () => <ElSelect></ElSelect>,
-  render: ({ props, model }) => (
-    <ElSelect {...model.default}>
+  render: ({ props }) => (
+    <ElSelect v-model={props.text}>
       {(props.options || []).map((opt, index) => {
         return (
           <ElOption label={opt.label} value={opt.value} key={index}></ElOption>
@@ -131,6 +137,7 @@ registerConfig.register({
   ),
   key: "select",
   props: {
+    text: createInputProp("绑定字段"),
     options: createTableProp("下拉选项", {
       options: [
         { label: "显示值", field: "label" },
@@ -139,9 +146,9 @@ registerConfig.register({
       key: "label",
     }),
   },
-  model: {
-    default: "绑定字段",
-  },
+  // model: {
+  //   default: "绑定字段",
+  // },
 });
 // model: {
 //   start: "开始";
