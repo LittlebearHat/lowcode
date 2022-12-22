@@ -1,0 +1,17 @@
+{
+    "container":{
+        "width":550,
+        "height":550
+    },
+    "blocks":[
+        {"top":100,"left":100,"zIndex":1,"key":"text","props":{"text":"双向绑定","color":"#fff","size":"20px"}},
+        {"top":200,"left":200,"zIndex":1,"key":"button","props":{
+            "text":"双向绑定按钮",
+            "type":"primary",
+            "size":"large"
+        }},
+        {"top":300,"left":300,"zIndex":1,"key":"input","props":{
+            "text":"双向绑定111"       
+        },"model":{"default":"username"}}
+    ]
+}
