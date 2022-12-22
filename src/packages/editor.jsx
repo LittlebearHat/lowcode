@@ -8,7 +8,7 @@ import { useCommand } from "@/utils/useCommand";
 import { $dialog } from "@/components/Dialog";
 import { $dropdown, DropdownItem } from "@/components/Dropdown";
 import deepcopy from "deepcopy";
-import { ElButton } from "element-plus";
+import { ElAvatar, ElButton } from "element-plus";
 import EditorOperator from "./editor-operator";
 export default defineComponent({
   props: {
@@ -59,11 +59,11 @@ export default defineComponent({
       { label: "撤销", icon: "icon-back", handler: () => commands.undo() },
       { label: "重做", icon: "icon-back", handler: () => commands.redo() },
       {
-        label: "导出",
+        label: "源码",
         icon: "icon-back",
         handler: () => {
           $dialog({
-            title: "开导",
+            title: "源码",
             content: JSON.stringify(data.value),
           });
         },
@@ -95,14 +95,14 @@ export default defineComponent({
         handler: () => commands.delete(),
       },
       {
-        label: () => (previewRef.value ? "编辑" : "预览"),
+        label: () => (previewRef.value ? "编辑" : "锁定"),
         icon: "111",
         handler: () => {
           previewRef.value = !previewRef.value;
         },
       },
       {
-        label: "关闭",
+        label: "预览",
         icon: "111",
         handler: () => {
           editorRef.value = !editorRef.value;
@@ -182,68 +182,90 @@ export default defineComponent({
           </div>
         </div>
       ) : (
-        <div class="editor">
-          <div class="editor-left">
-            {config.componentList.map((component) => (
-              <div
-                class="editor-left-item"
-                onDragstart={(e) => dragstart(e, component)}
-                draggable="true"
-                onDragend={dragend}
-              >
-                <span>{component.label}</span>
-                <div>{component.preview()}</div>
-              </div>
-            ))}
+        <div class="box">
+          <div class="header">
+            <div class="head-img">
+              <img
+                src="https://www.z4a.net/images/2022/12/22/QQ20221007122031.png"
+                alt="QQ20221007122031.png"
+                border="0"
+              />
+            </div>
+            <div class="font">BEAR EDITOR</div>
           </div>
-          <div class="editor-top">
-            {buttons.map((btn, index) => {
-              return (
-                <div class="editor-top-button" onClick={btn.handler}>
-                  <span>
-                    {typeof btn.label == "function" ? btn.label() : btn.label}
-                  </span>
+          <div class="editor">
+            <div class="editor-left">
+              {config.componentList.map((component) => (
+                <div
+                  class="editor-left-item"
+                  onDragstart={(e) => dragstart(e, component)}
+                  draggable="true"
+                  onDragend={dragend}
+                >
+                  <span>{component.label}</span>
+                  <div>{component.preview()}</div>
                 </div>
-              );
-            })}
-          </div>
-          <div class="editor-right">
-            <EditorOperator
-              block={lastSelectBlock.value}
-              data={data.value}
-              updateContainer={commands.updateContainer}
-              updateBlock={commands.updateBlock}
-            ></EditorOperator>
-          </div>
-          <div class="editor-container">
-            <div class="editor-container-canvas">
-              <div
-                class="editor-container-canvas__content"
-                style={containerStyles.value}
-                ref={containerRef}
-                onMousedown={containerMousedown} //在容器内部点击清除所有标记
-              >
-                {data.value.blocks.map((block, index) => {
+              ))}
+            </div>
+            <div class="editor-center">
+              <div class="editor-top">
+                {buttons.map((btn, index) => {
                   return (
-                    <EditorBlock
-                      class={block.focus ? "editor-block-focus" : ""}
-                      class={previewRef.value ? "editor-block-preview" : ""}
-                      block={block}
-                      onMousedown={(e) => {
-                        blockMousedown(e, block, index);
-                      }}
-                      onContextmenu={(e) => onContextMenuBlock(e, block)}
-                      formData={props.formData}
-                    ></EditorBlock>
+                    <div class="editor-top-button" onClick={btn.handler}>
+                      <span>
+                        {typeof btn.label == "function"
+                          ? btn.label()
+                          : btn.label}
+                      </span>
+                    </div>
                   );
                 })}
-                {markLine.y != null && (
-                  <div class="line-y" style={{ top: markLine.y + "px" }}></div>
-                )}
-                {markLine.x != null && (
-                  <div class="line-x" style={{ left: markLine.x + "px" }}></div>
-                )}
               </div>
+              <div class="editor-container">
+                <div class="editor-container-canvas">
+                  <div
+                    class="editor-container-canvas__content"
+                    style={containerStyles.value}
+                    ref={containerRef}
+                    onMousedown={containerMousedown} //在容器内部点击清除所有标记
+                  >
+                    {data.value.blocks.map((block, index) => {
+                      return (
+                        <EditorBlock
+                          class={block.focus ? "editor-block-focus" : ""}
+                          class={previewRef.value ? "editor-block-preview" : ""}
+                          block={block}
+                          onMousedown={(e) => {
+                            blockMousedown(e, block, index);
+                          }}
+                          onContextmenu={(e) => onContextMenuBlock(e, block)}
+                          formData={props.formData}
+                        ></EditorBlock>
+                      );
+                    })}
+                    {markLine.y != null && (
+                      <div
+                        class="line-y"
+                        style={{ top: markLine.y + "px" }}
+                      ></div>
+                    )}
+                    {markLine.x != null && (
+                      <div
+                        class="line-x"
+                        style={{ left: markLine.x + "px" }}
+                      ></div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="editor-right">
+              <EditorOperator
+                block={lastSelectBlock.value}
+                data={data.value}
+                updateContainer={commands.updateContainer}
+                updateBlock={commands.updateBlock}
+              ></EditorOperator>
             </div>
           </div>
         </div>

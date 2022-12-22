@@ -150,6 +150,141 @@ registerConfig.register({
   //   default: "绑定字段",
   // },
 });
+registerConfig.register({
+  label: "下拉框",
+  preview: () => <ElSelect></ElSelect>,
+  render: ({ props }) => (
+    <ElSelect v-model={props.text}>
+      {(props.options || []).map((opt, index) => {
+        return (
+          <ElOption label={opt.label} value={opt.value} key={index}></ElOption>
+        );
+      })}
+    </ElSelect>
+  ),
+  key: "select",
+  props: {
+    text: createInputProp("绑定字段"),
+    options: createTableProp("下拉选项", {
+      options: [
+        { label: "显示值", field: "label" },
+        { label: "绑定值", field: "value" },
+      ],
+      key: "label",
+    }),
+  },
+  // model: {
+  //   default: "绑定字段",
+  // },
+});
+registerConfig.register({
+  label: "下拉框",
+  preview: () => <ElSelect></ElSelect>,
+  render: ({ props }) => (
+    <ElSelect v-model={props.text}>
+      {(props.options || []).map((opt, index) => {
+        return (
+          <ElOption label={opt.label} value={opt.value} key={index}></ElOption>
+        );
+      })}
+    </ElSelect>
+  ),
+  key: "select",
+  props: {
+    text: createInputProp("绑定字段"),
+    options: createTableProp("下拉选项", {
+      options: [
+        { label: "显示值", field: "label" },
+        { label: "绑定值", field: "value" },
+      ],
+      key: "label",
+    }),
+  },
+  // model: {
+  //   default: "绑定字段",
+  // },
+});
+registerConfig.register({
+  label: "下拉框",
+  preview: () => <ElSelect></ElSelect>,
+  render: ({ props }) => (
+    <ElSelect v-model={props.text}>
+      {(props.options || []).map((opt, index) => {
+        return (
+          <ElOption label={opt.label} value={opt.value} key={index}></ElOption>
+        );
+      })}
+    </ElSelect>
+  ),
+  key: "select",
+  props: {
+    text: createInputProp("绑定字段"),
+    options: createTableProp("下拉选项", {
+      options: [
+        { label: "显示值", field: "label" },
+        { label: "绑定值", field: "value" },
+      ],
+      key: "label",
+    }),
+  },
+  // model: {
+  //   default: "绑定字段",
+  // },
+});
+registerConfig.register({
+  label: "下拉框",
+  preview: () => <ElSelect></ElSelect>,
+  render: ({ props }) => (
+    <ElSelect v-model={props.text}>
+      {(props.options || []).map((opt, index) => {
+        return (
+          <ElOption label={opt.label} value={opt.value} key={index}></ElOption>
+        );
+      })}
+    </ElSelect>
+  ),
+  key: "select",
+  props: {
+    text: createInputProp("绑定字段"),
+    options: createTableProp("下拉选项", {
+      options: [
+        { label: "显示值", field: "label" },
+        { label: "绑定值", field: "value" },
+      ],
+      key: "label",
+    }),
+  },
+  // model: {
+  //   default: "绑定字段",
+  // },
+});
+registerConfig.register({
+  label: "下拉框",
+  preview: () => <ElSelect></ElSelect>,
+  render: ({ props }) => (
+    <ElSelect v-model={props.text}>
+      {(props.options || []).map((opt, index) => {
+        return (
+          <ElOption label={opt.label} value={opt.value} key={index}></ElOption>
+        );
+      })}
+    </ElSelect>
+  ),
+  key: "select",
+  props: {
+    text: createInputProp("绑定字段"),
+    options: createTableProp("下拉选项", {
+      options: [
+        { label: "显示值", field: "label" },
+        { label: "绑定值", field: "value" },
+      ],
+      key: "label",
+    }),
+  },
+  // model: {
+  //   default: "绑定字段",
+  // },
+});
 // model: {
 //   start: "开始";
 //   end: "结束";
