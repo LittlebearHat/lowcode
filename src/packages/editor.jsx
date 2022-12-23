@@ -174,7 +174,7 @@ export default defineComponent({
     const leftWidth = ref(300);
     const rightWidth = ref(300);
     const widthChange = (movement, width, flag) => {
-      console.log(flag);
+      //console.log(flag);
       //console.log("拓宽", movement);
       // console.log(width);
       //width -= movement;
@@ -294,7 +294,16 @@ export default defineComponent({
               width={leftWidth.value}
               flag={"left"}
             ></XResize>
-            <div class="editor-center">
+            <div
+              class="editor-center"
+              style={
+                "width:calc(100% - " +
+                leftWidth.value +
+                "px - " +
+                rightWidth.value +
+                "px)"
+              }
+            >
               {/* <div class="editor-top">
                 {buttons.map((btn, index) => {
                   return (

@@ -62,6 +62,7 @@
     }
   }
   &-right {
+    // flex: 1;
     // right: 0;
     // border-left: 3px solid rgb(160, 159, 159);
     display: flex;
@@ -111,7 +112,8 @@
   }
 }
 .editor-center {
-  width: 60%;
+  width: calc(100% - 608px);
+  height: 100%;
 }
 .editor-block {
   position: absolute;
@@ -195,12 +197,14 @@
   left: 0;
   right: 0;
   border-top: 1px dashed red;
+  z-index: 99;
 }
 .line-x {
   position: absolute;
   top: 0;
   bottom: 0;
   border-left: 1px dashed red;
+  z-index: 99;
 }
 .content-preview {
   width: 100%;
