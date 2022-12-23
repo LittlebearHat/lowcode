@@ -8,8 +8,9 @@ import { useCommand } from "@/utils/useCommand";
 import { $dialog } from "@/components/Dialog";
 import { $dropdown, DropdownItem } from "@/components/Dropdown";
 import deepcopy from "deepcopy";
-import { ElAvatar, ElButton } from "element-plus";
+import { ElAvatar, ElButton, ElTabPane, ElTabs } from "element-plus";
 import EditorOperator from "./editor-operator";
+import XResize from "@/components/x-resize";
 export default defineComponent({
   props: {
     modelValue: { type: Object }, //传入state值
@@ -56,11 +57,19 @@ export default defineComponent({
     );
     const { commands } = useCommand(data, focusData);
     const buttons = [
-      { label: "撤销", icon: "icon-back", handler: () => commands.undo() },
-      { label: "重做", icon: "icon-back", handler: () => commands.redo() },
+      {
+        label: "撤销",
+        icon: "iconfont icon-xiangzuo",
+        handler: () => commands.undo(),
+      },
+      {
+        label: "重做",
+        icon: "iconfont icon-xiangyou1",
+        handler: () => commands.redo(),
+      },
       {
         label: "源码",
-        icon: "icon-back",
+        icon: "iconfont icon-suyuanmaguanli",
         handler: () => {
           $dialog({
             title: "源码",
@@ -70,7 +79,7 @@ export default defineComponent({
       },
       {
         label: "导入",
-        icon: "icon-back",
+        icon: "iconfont icon-xiazaidaoru",
         handler: () => {
           $dialog({
             title: "导入",
@@ -83,27 +92,32 @@ export default defineComponent({
           });
         },
       },
-      { label: "置顶", icon: "icon-back", handler: () => commands.placeTop() },
+      {
+        label: "置顶",
+        icon: "iconfont icon-zhiding",
+        handler: () => commands.placeTop(),
+      },
       {
         label: "置底",
-        icon: "icon-back",
+        icon: "iconfont icon-zhidi",
         handler: () => commands.placeBottom(),
       },
       {
         label: "删除",
-        icon: "icon-back",
+        icon: "iconfont icon-shanchu",
         handler: () => commands.delete(),
       },
       {
         label: () => (previewRef.value ? "编辑" : "锁定"),
-        icon: "111",
+        icon: () =>
+          previewRef.value ? "iconfont icon-bianji" : "iconfont icon-suoding",
         handler: () => {
           previewRef.value = !previewRef.value;
         },
       },
       {
         label: "预览",
-        icon: "111",
+        icon: "iconfont icon-yulan",
         handler: () => {
           editorRef.value = !editorRef.value;
           data.value.blocks.forEach((block) => (block.focus = false)); //清除所有标记
@@ -157,10 +171,44 @@ export default defineComponent({
         ),
       });
     };
-
+    const leftWidth = ref(300);
+    const rightWidth = ref(300);
+    const widthChange = (movement, width, flag) => {
+      console.log(flag);
+      //console.log("拓宽", movement);
+      // console.log(width);
+      //width -= movement;
+      //  console.log("款第", width);
+      if (flag == "left") {
+        width -= movement;
+        leftWidth.value = width;
+      }
+      if (flag == "right") {
+        width += movement;
+        rightWidth.value = width;
+      }
+      // if (width < 100) {
+      //   leftWidth.value = 100;
+      // }
+      // if (width > 600) {
+      //   leftWidth.value = 600;
+      // }
+    };
+    const showoutWidth = (res, width) => {
+      if (width > 0) {
+        width = res;
+      } else {
+        width = 300;
+      }
+    };
     return () =>
       !editorRef.value ? (
         <div class="content-preview">
+          <div>
+            <ElButton onClick={() => (editorRef.value = !editorRef.value)}>
+              返回
+            </ElButton>
+          </div>
           <div
             class="editor-container-canvas__content"
             style={containerStyles.value}
@@ -175,11 +223,6 @@ export default defineComponent({
               );
             })}
           </div>
-          <div>
-            <ElButton onClick={() => (editorRef.value = !editorRef.value)}>
-              返回
-            </ElButton>
-          </div>
         </div>
       ) : (
         <div class="box">
@@ -192,10 +235,48 @@ export default defineComponent({
               />
             </div>
             <div class="font">BEAR EDITOR</div>
+            <div class="editor-button">
+              {buttons.map((btn, index) => {
+                return (
+                  <div
+                    class="editor-top-button"
+                    title={
+                      typeof btn.label == "function" ? btn.label() : btn.label
+                    }
+                    onClick={btn.handler}
+                  >
+                    {/* <span>
+                      {typeof btn.label == "function" ? btn.label() : btn.label}
+                    </span> */}
+                    <i
+                      class={
+                        typeof btn.icon == "function" ? btn.icon() : btn.icon
+                      }
+                    ></i>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div class="editor">
-            <div class="editor-left">
-              {config.componentList.map((component) => (
+            <div class="editor-left" style={"width:" + leftWidth.value + "px"}>
+              <ElTabs tab-position="left" style="height:100%">
+                <ElTabPane label="组件">
+                  {config.componentList.map((component) => (
+                    <div
+                      class="editor-left-item"
+                      onDragstart={(e) => dragstart(e, component)}
+                      draggable="true"
+                      onDragend={dragend}
+                    >
+                      <span>{component.label}</span>
+                      <div>{component.preview()}</div>
+                    </div>
+                  ))}
+                </ElTabPane>
+                <ElTabPane label="图表">敬请期待</ElTabPane>
+              </ElTabs>
+              {/* {config.componentList.map((component) => (
                 <div
                   class="editor-left-item"
                   onDragstart={(e) => dragstart(e, component)}
@@ -205,10 +286,16 @@ export default defineComponent({
                   <span>{component.label}</span>
                   <div>{component.preview()}</div>
                 </div>
-              ))}
+              ))} */}
             </div>
+            <XResize
+              widthChange={widthChange}
+              showoutWidth={showoutWidth}
+              width={leftWidth.value}
+              flag={"left"}
+            ></XResize>
             <div class="editor-center">
-              <div class="editor-top">
+              {/* <div class="editor-top">
                 {buttons.map((btn, index) => {
                   return (
                     <div class="editor-top-button" onClick={btn.handler}>
@@ -220,7 +307,7 @@ export default defineComponent({
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
               <div class="editor-container">
                 <div class="editor-container-canvas">
                   <div
@@ -259,7 +346,16 @@ export default defineComponent({
                 </div>
               </div>
             </div>
-            <div class="editor-right">
+            <XResize
+              widthChange={widthChange}
+              showoutWidth={showoutWidth}
+              width={rightWidth.value}
+              flag={"right"}
+            ></XResize>
+            <div
+              class="editor-right"
+              style={"width:" + rightWidth.value + "px"}
+            >
               <EditorOperator
                 block={lastSelectBlock.value}
                 data={data.value}
