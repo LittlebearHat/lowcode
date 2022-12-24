@@ -1,24 +1,19 @@
-# lowcode
+# BEAR EDITOR
 
-## Project setup
-```
-npm install
-```
+基于Vue3（jsx动态写法）+Element-Plus的低代码开发平台，目前只完成基础demo，后续会扩展图表类完善可视化快速搭建。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 低代码平台原理
 
-### Compiles and minifies for production
-```
-npm run build
-```
+生成一个json数据，每次拖拽预览组件到渲染区都会在数组中塞入新的组件配置，而修改组件属性也会更改json数据，通过json数据来渲染指定页面。低代码平台的难点在于设计问题，需要开发者对设计模式有一定的了解。
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 低代码平台常见的组成分区
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+现有demo的组成有物料区，预览区，菜单和编辑区。
+
+## DEMO的后续思考
+
+现在完成的只是UI组件渲染，后续考虑研究“基础业务逻辑”和“组件树”。
+
+## 结束语
+
+前面说了现在完成的只是渲染组件部分，很多优化都没有去做，本人比较菜，对低代码的了解也比较浅，欢迎大佬来提意见给思路，后续对DEMO的想法是扩展Echarts图表部分完成基础的中台可视化搭建，思考如何连接后端API和组件树设计对我来说是件很困难的事，现在还没有明确的思路。说白了，菜菜，带带。
